@@ -1,0 +1,102 @@
+/* LOVE LETTER MAGAZINE — STYLES
+Modern serif, minimal, editorial feel.
+Edit colours + fonts freely. */
+
+body {
+margin: 0;
+font-family: Georgia, "Times New Roman", serif;
+background: #faf9f7;
+color: #111;
+line-height: 1.6;
+}
+
+
+.site-header {
+padding: 2rem;
+border-bottom: 1px solid #ddd;
+text-align: center;
+}
+
+
+.logo {
+margin: 0;
+font-size: 2.2rem;
+font-weight: normal;
+}
+
+
+.nav {
+margin-top: 1rem;
+}
+
+
+.nav a {
+margin: 0 0.8rem;
+text-decoration: none;
+color: #111;
+font-size: 1rem;
+}
+
+
+.nav a:hover,
+.nav a.active {
+text-decoration: underline;
+}
+
+
+.container {
+max-width: 900px;
+margin: auto;
+padding: 3rem 1.5rem;
+}
+
+
+.hero h2 {
+font-size: 2rem;
+font-weight: normal;
+}
+
+
+.button {
+display: inline-block;
+margin-top: 1.5rem;
+padding: 0.6rem 1.2rem;
+border: 1px solid #111;
+text-decoration: none;
+color: #111;
+}
+
+
+.button:hover {
+background: #111;
+color: #faf9f7;
+}
+
+
+.card-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+gap: 1.2rem;
+margin-top: 2rem;
+}
+
+
+.card {
+padding: 1.2rem;
+border: 1px solid #ddd;
+background: white;
+}
+
+
+.archive-list {
+margin-top: 1.5rem;
+}
+
+
+.footer {
+text-align: center;
+padding: 2rem;
+border-top: 1px solid #ddd;
+font-size: 0.9rem;
+color: #444;
+}
