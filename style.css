@@ -100,3 +100,79 @@ border-top: 1px solid #ddd;
 font-size: 0.9rem;
 color: #444;
 }
+
+/* HOME PAGE ART LAYOUT */
+.home-main {
+    min-height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem 1rem;
+}
+
+.landing-art {
+    text-align: center;
+}
+
+.hero-image {
+    width: 420px;
+    max-width: 90%;
+    height: auto;
+    border: 1px solid #111;
+    padding: 10px;
+    background: white;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+}
+
+.coming-soon {
+    margin-top: 1.8rem;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.subtitle {
+    margin-top: 0.8rem;
+    font-size: 1rem;
+    font-style: italic;
+    letter-spacing: 0.5px;
+}
+
+/* SUBTLE FADE IN */
+.landing-art {
+    text-align: center;
+    opacity: 0;
+    transform: translateY(8px);
+    animation: fadeInPage 1.6s ease forwards;
+}
+
+@keyframes fadeInPage {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.logo {
+    margin: 0;
+}
+
+.logo-image {
+    width: 260px;
+    max-width: 90%;
+    height: auto;
+}
+
+.logo-image {
+    width: 260px;
+    max-width: 90%;
+    height: auto;
+    opacity: 0;
+    animation: fadeInLogo 1.2s ease forwards;
+}
+
+@keyframes fadeInLogo {
+    to {
+        opacity: 1;
+    }
+}
