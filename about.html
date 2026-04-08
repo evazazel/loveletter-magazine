@@ -1,50 +1,386 @@
-<!-- ======================= about.html (EDITORIAL NOTE) ======================= -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Editorial Note — Love Letter</title>
-<link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Love Letter</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .envelope-layer {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 100;
+            overflow: hidden;
+        }
+
+        .envelope {
+            position: absolute;
+            left: 0;
+            top: 0;
+            pointer-events: all;
+            cursor: grab;
+            user-select: none;
+            -webkit-user-select: none;
+            will-change: transform;
+            transition: filter 0.15s ease;
+        }
+
+        .envelope.held {
+            cursor: grabbing;
+        }
+
+        .envelope img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            pointer-events: none;
+            -webkit-user-drag: none;
+        }
+    </style>
 </head>
 <body>
+    <nav class = "home-nav">
+    <a href="index.html" class="logo-link">
+        <img src="logo.svg" alt="Love Letter" class="logo">
+    </a>
 
-
-<header class="site-header">
-<h1 class="logo">Love Letter</h1>
-<nav class="nav">
-<a href="index.html">Home</a>
-<a href="about.html" class="active">Editorial Note</a>
-<a href="archive.html">Archive</a>
-<a href="submissions.html">Submissions</a>
-<a href="contact.html">Contact</a>
+    <div class="nav-links">
+        <a href="index.html">HOME</a>
+        <a href="about.html">ABOUT</a>
+        <a href="submissions.html">SUBMISSIONS</a>
+    </div>
 </nav>
-</header>
 
+    <main class="text-page">
+        <h1>ABOUT</h1>
+        <p>
+            Writing a love letter is a deeply intimate act with a costly price. The writer of such pages has opted to perform a kind of pre-mortem autopsy for the receiver. They have made a Y-shaped incision, used rib shears to an effective degree, and shifted their left lung aside to bare their heart. Through this bloody ordeal, these letters become a reflection of who we are and what makes us whole.
+        </p>
+        <p>
+            Unlike ordinary correspondence, a love letter aches for a reply. An unspoken contract has formed between the writer and the recipient. I have shown you my heart, please answer. Thus, the pieces in this magazine require such a response from our readers, whether that be rejection and disgust to amorous acceptance and reciprocation.
+        </p>
+        <p>
+            In the eyes of the Romantic, a love letter may take many forms: a bus route you take twice a day, the calluses on your fingers, a receipt kept in your wallet, a peculiar-shaped rock found at the beach, or a jar of baby teeth your mother still keeps around. A love letter can be to a place, a dream, a person, even oneself.
+        </p>
+        <p>
+            The monotony of life is ensnaring: an endless cycle of tasks and an infinite series of choices that make themselves. The trials of living often obscure the act of living itself. And so, it is the quiet compulsion of the Romantic who finds time to remember that we are alive; in living there is love, and in love, there is both beauty and bloody struggle.
+        </p>
+    </main>
 
-<main class="container">
-<section class="page">
-<h2>Editorial Note</h2>
-<p>
-Love Letter Magazine was created as a home for writing that feels intimate,
-transient, and honest.
-</p>
-<p>
-We are interested in the momentary: people, paraphernalia, the impermanent
-parts of life that disappear too quickly.
-</p>
-<p>
-This magazine is a love letter — not only to others, but to the self,
-to memory, to place.
-</p>
-</section>
-</main>
+    <div class="envelope-layer" id="envelopeLayer"></div>
 
+    <script>
+    // ─────────────────────────────────────────────────────────────
+    //  CONFIGURE YOUR ENVELOPES HERE
+    //  Replace each entry with the path to your PNG file.
+    //  width/height should match your image's aspect ratio (px).
+    //  You can add or remove entries freely.
+    // ─────────────────────────────────────────────────────────────
+    const ENVELOPE_CONFIGS = [
+        { src: 'letter1.png', width: 98,  height: 67 },
+    { src: 'letter2.png', width: 91,  height: 62 },
+    { src: 'letter3.png', width: 105, height: 70 },
+    { src: 'letter4.png', width: 84,  height: 56 },
+    { src: 'letter1.png', width: 88,  height: 59 },
+    { src: 'letter2.png', width: 102, height: 68 },
+    { src: 'letter3.png', width: 95,  height: 63 },
+    { src: 'letter4.png', width: 88,  height: 64 },
+    { src: 'letter1.png', width: 98,  height: 67 },
+    { src: 'letter2.png', width: 91,  height: 62 },
+    { src: 'letter3.png', width: 105, height: 70 },
+    { src: 'letter4.png', width: 84,  height: 56 },
+    { src: 'letter1.png', width: 88,  height: 59 },
+    { src: 'letter2.png', width: 102, height: 68 },
+    { src: 'letter3.png', width: 95,  height: 63 },
+    { src: 'letter4.png', width: 88,  height: 64 },
+    { src: 'letter3.png', width: 105, height: 70 },
+    { src: 'letter4.png', width: 84,  height: 56 },
+    { src: 'letter1.png', width: 88,  height: 59 },
+    { src: 'letter2.png', width: 102, height: 68 },
+    { src: 'letter3.png', width: 95,  height: 63 },
+    { src: 'letter4.png', width: 88,  height: 64 },
+    ];
 
-<footer class="footer">
-<p>© 2026 Love Letter Magazine</p>
+    // ─────────────────────────────────────────────────────────────
+    //  PHYSICS TUNING
+    // ─────────────────────────────────────────────────────────────
+    const GRAVITY        = 0.1;   // downward pull each frame
+    const DAMPING        = 0.988;  // air resistance (1 = none, 0 = instant stop)
+    const ANG_DAMPING    = 0.90;   // rotational friction
+    const RESTITUTION    = 0.7;   // bounciness on collisions (0–1)
+    const FLOOR_FRICTION = 0.80;   // horizontal slowdown when hitting floor
+
+    // ─────────────────────────────────────────────────────────────
+    //  FALLBACK SVGs (used if a PNG fails to load)
+    // ─────────────────────────────────────────────────────────────
+    function makeFallbackSVG(index) {
+        const palettes = [
+            { body: '#f9ede0', stroke: '#c9a07a', seal: '#8b3a3a' },
+            { body: '#fce8e8', stroke: '#d49090', seal: '#7a2020' },
+            { body: '#e8f0e8', stroke: '#88a888', seal: '#3a6a3a' },
+            { body: '#e8eaf8', stroke: '#8890c8', seal: '#3a3a8b' },
+            { body: '#fdf5e0', stroke: '#c8b070', seal: '#8b6020' },
+            { body: '#f5e8f5', stroke: '#c890c8', seal: '#6a2a6a' },
+        ];
+        const p = palettes[index % palettes.length];
+        const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 95">
+  <rect x="2" y="2" width="136" height="91" rx="5" fill="${p.body}" stroke="${p.stroke}" stroke-width="2"/>
+  <path d="M2 2 L70 55 L138 2" fill="none" stroke="${p.stroke}" stroke-width="1.8"/>
+  <path d="M2 95 L55 50 M138 95 L85 50" stroke="${p.stroke}" stroke-width="1.2" opacity="0.35"/>
+  <path d="M70 68 C70 68 63 61 63 57 C63 53.5 66 52 70 54.5 C74 52 77 53.5 77 57 C77 61 70 68 70 68Z" fill="${p.seal}"/>
+</svg>`;
+        return 'data:image/svg+xml,' + encodeURIComponent(svg);
+    }
+
+    // ─────────────────────────────────────────────────────────────
+    //  PHYSICS STATE
+    // ─────────────────────────────────────────────────────────────
+    const bodies = [];
+
+    let dragBody    = null;
+    let dragOffX    = 0;
+    let dragOffY    = 0;
+    let prevMouseX  = 0;
+    let prevMouseY  = 0;
+    let mouseVelX   = 0;
+    let mouseVelY   = 0;
+
+    // ─────────────────────────────────────────────────────────────
+    //  BUILD ENVELOPES
+    // ─────────────────────────────────────────────────────────────
+    function init() {
+        const layer = document.getElementById('envelopeLayer');
+        const VW = window.innerWidth;
+        const VH = window.innerHeight;
+
+        ENVELOPE_CONFIGS.forEach((cfg, i) => {
+            // Scatter across viewport, mostly upper half so they fall nicely
+            const x = 40 + Math.random() * (VW - cfg.width - 80);
+            const y = -cfg.height - Math.random() * VH * 0.5; // start above viewport → fall in
+            const angle = (Math.random() - 0.5) * 35;
+
+            const el = document.createElement('div');
+            el.className = 'envelope';
+            el.style.width  = cfg.width  + 'px';
+            el.style.height = cfg.height + 'px';
+
+            const img = document.createElement('img');
+            img.alt = 'envelope';
+            img.src = cfg.src;
+            img.onerror = () => { img.src = makeFallbackSVG(i); };
+            img.draggable = false;
+            el.appendChild(img);
+            layer.appendChild(el);
+
+            const body = {
+                el,
+                x, y,
+                w: cfg.width,
+                h: cfg.height,
+                vx: (Math.random() - 0.5) * 3,
+                vy: Math.random() * 1.5,
+                angle,
+                angVel: (Math.random() - 0.5) * 1.8,
+            };
+            bodies.push(body);
+
+            applyTransform(body);
+
+            // ── Mouse drag ──
+            el.addEventListener('mousedown', e => {
+                e.preventDefault();
+                beginDrag(body, e.clientX, e.clientY);
+            });
+
+            // ── Touch drag ──
+            el.addEventListener('touchstart', e => {
+                e.preventDefault();
+                const t = e.touches[0];
+                beginDrag(body, t.clientX, t.clientY);
+            }, { passive: false });
+        });
+    }
+
+    function applyTransform(b) {
+        b.el.style.transform = `translate(${b.x}px,${b.y}px) rotate(${b.angle}deg)`;
+    }
+
+    // ─────────────────────────────────────────────────────────────
+    //  DRAG
+    // ─────────────────────────────────────────────────────────────
+    function beginDrag(body, cx, cy) {
+        dragBody   = body;
+        dragOffX   = cx - body.x;
+        dragOffY   = cy - body.y;
+        prevMouseX = cx;
+        prevMouseY = cy;
+        mouseVelX  = 0;
+        mouseVelY  = 0;
+        body.el.classList.add('held');
+        body.el.style.zIndex = '999';
+    }
+
+    function moveDrag(cx, cy) {
+        mouseVelX = cx - prevMouseX;
+        mouseVelY = cy - prevMouseY;
+        prevMouseX = cx;
+        prevMouseY = cy;
+        if (dragBody) {
+            dragBody.x = cx - dragOffX;
+            dragBody.y = cy - dragOffY;
+            applyTransform(dragBody);
+        }
+    }
+
+    function endDrag() {
+        if (dragBody) {
+            dragBody.vx     = mouseVelX * 0.85;
+            dragBody.vy     = mouseVelY * 0.85;
+            dragBody.angVel = (mouseVelX - mouseVelY) * 0.12;
+            dragBody.el.classList.remove('held');
+            dragBody.el.style.zIndex = '';
+            dragBody = null;
+        }
+    }
+
+    document.addEventListener('mousemove',  e => moveDrag(e.clientX, e.clientY));
+    document.addEventListener('mouseup',    endDrag);
+    document.addEventListener('touchmove',  e => {
+        if (dragBody) {
+            e.preventDefault();
+            const t = e.touches[0];
+            moveDrag(t.clientX, t.clientY);
+        }
+    }, { passive: false });
+    document.addEventListener('touchend',   endDrag);
+
+    // ─────────────────────────────────────────────────────────────
+    //  COLLISION RESOLUTION  (AABB)
+    // ─────────────────────────────────────────────────────────────
+    function resolveCollision(a, b) {
+        const overlapX = Math.min(a.x + a.w, b.x + b.w) - Math.max(a.x, b.x);
+        const overlapY = Math.min(a.y + a.h, b.y + b.h) - Math.max(a.y, b.y);
+        if (overlapX <= 0 || overlapY <= 0) return;
+
+        const aFixed = (a === dragBody);
+        const bFixed = (b === dragBody);
+
+        if (overlapX < overlapY) {
+            // Separate on X axis
+            const dir = (a.x + a.w * 0.5) < (b.x + b.w * 0.5) ? 1 : -1;
+            const push = overlapX * 0.52;
+            if (!aFixed) a.x -= dir * (bFixed ? overlapX : push);
+            if (!bFixed) b.x += dir * (aFixed ? overlapX : push);
+
+            if (aFixed) {
+                b.vx    =  dir * (Math.abs(mouseVelX) + 1) * RESTITUTION;
+                b.angVel += mouseVelY * 0.06;
+            } else if (bFixed) {
+                a.vx    = -dir * (Math.abs(mouseVelX) + 1) * RESTITUTION;
+                a.angVel += mouseVelY * 0.06;
+            } else {
+                const tmp = a.vx;
+                a.vx = b.vx * RESTITUTION;
+                b.vx = tmp * RESTITUTION;
+                const spin = (a.vy - b.vy) * 0.05;
+                a.angVel += spin;
+                b.angVel -= spin;
+            }
+        } else {
+            // Separate on Y axis
+            const dir = (a.y + a.h * 0.5) < (b.y + b.h * 0.5) ? 1 : -1;
+            const push = overlapY * 0.52;
+            if (!aFixed) a.y -= dir * (bFixed ? overlapY : push);
+            if (!bFixed) b.y += dir * (aFixed ? overlapY : push);
+
+            if (aFixed) {
+                b.vy    =  dir * (Math.abs(mouseVelY) + 1) * RESTITUTION;
+                b.angVel += mouseVelX * 0.06;
+            } else if (bFixed) {
+                a.vy    = -dir * (Math.abs(mouseVelY) + 1) * RESTITUTION;
+                a.angVel += mouseVelX * 0.06;
+            } else {
+                const tmp = a.vy;
+                a.vy = b.vy * RESTITUTION;
+                b.vy = tmp * RESTITUTION;
+                const spin = (a.vx - b.vx) * 0.05;
+                a.angVel += spin;
+                b.angVel -= spin;
+            }
+        }
+    }
+
+    // ─────────────────────────────────────────────────────────────
+    //  MAIN LOOP
+    // ─────────────────────────────────────────────────────────────
+    function tick() {
+        const VW = window.innerWidth;
+        const VH = window.innerHeight;
+
+        for (const b of bodies) {
+            if (b === dragBody) continue;
+
+            b.vy     += GRAVITY;
+            b.vx     *= DAMPING;
+            b.vy     *= DAMPING;
+            b.angVel *= ANG_DAMPING;
+
+            b.x     += b.vx;
+            b.y     += b.vy;
+            b.angle += b.angVel;
+
+            // ── Wall bounces ──
+            if (b.x < 0) {
+                b.x  = 0;
+                b.vx = Math.abs(b.vx) * RESTITUTION;
+                b.angVel *= -0.6;
+            }
+            if (b.x + b.w > VW) {
+                b.x  = VW - b.w;
+                b.vx = -Math.abs(b.vx) * RESTITUTION;
+                b.angVel *= -0.6;
+            }
+            if (b.y < 0) {
+                b.y  = 0;
+                b.vy = Math.abs(b.vy) * RESTITUTION;
+            }
+            if (b.y + b.h > VH) {
+                b.y  = VH - b.h;
+                b.vy = -Math.abs(b.vy) * RESTITUTION;
+                b.vx *= FLOOR_FRICTION;
+                b.angVel *= 0.65;
+            }
+
+            // Clamp rotation so envelopes stay vaguely envelope-shaped
+            b.angle = Math.max(-50, Math.min(50, b.angle));
+
+            applyTransform(b);
+        }
+
+        // Envelope–envelope collisions
+        for (let i = 0; i < bodies.length; i++) {
+            for (let j = i + 1; j < bodies.length; j++) {
+                resolveCollision(bodies[i], bodies[j]);
+            }
+        }
+
+        requestAnimationFrame(tick);
+    }
+
+    // ─────────────────────────────────────────────────────────────
+    //  GO
+    // ─────────────────────────────────────────────────────────────
+    init();
+    requestAnimationFrame(tick);
+    </script>
+
+<footer class="site-footer">
+    <a href="https://instagram.com/thelovelettermag" target="_blank" class="footer-link">
+        INSTAGRAM
+    </a>
+    <span>© 2026 THE LOVE LETTER</span>
 </footer>
-
-
 </body>
 </html>
