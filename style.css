@@ -1,178 +1,409 @@
-/* LOVE LETTER MAGAZINE — STYLES
-Modern serif, minimal, editorial feel.
-Edit colours + fonts freely. */
-
 body {
-margin: 0;
-font-family: Georgia, "Times New Roman", serif;
-background: #faf9f7;
-color: #111;
-line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background: white;
+    color: black;
+    font-family: "Angsana New", Georgia, serif;
 }
 
-
-.site-header {
-padding: 2rem;
-border-bottom: 1px solid #ddd;
-text-align: center;
-}
-
-
-.logo {
-margin: 0;
-font-size: 2.2rem;
-font-weight: normal;
-}
-
-
-.nav {
-margin-top: 1rem;
-}
-
-
-.nav a {
-margin: 0 0.8rem;
-text-decoration: none;
-color: #111;
-font-size: 1rem;
-}
-
-
-.nav a:hover,
-.nav a.active {
-text-decoration: underline;
-}
-
-
-.container {
-max-width: 900px;
-margin: auto;
-padding: 3rem 1.5rem;
-}
-
-
-.hero h2 {
-font-size: 2rem;
-font-weight: normal;
-}
-
-
-.button {
-display: inline-block;
-margin-top: 1.5rem;
-padding: 0.6rem 1.2rem;
-border: 1px solid #111;
-text-decoration: none;
-color: #111;
-}
-
-
-.button:hover {
-background: #111;
-color: #faf9f7;
-}
-
-
-.card-grid {
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-gap: 1.2rem;
-margin-top: 2rem;
-}
-
-
-.card {
-padding: 1.2rem;
-border: 1px solid #ddd;
-background: white;
-}
-
-
-.archive-list {
-margin-top: 1.5rem;
-}
-
-
-.footer {
-text-align: center;
-padding: 2rem;
-border-top: 1px solid #ddd;
-font-size: 0.9rem;
-color: #444;
-}
-
-/* HOME PAGE ART LAYOUT */
-.home-main {
-    min-height: 80vh;
+nav {
     display: flex;
     justify-content: center;
+    gap: 50px;
+    padding: 30px 0;
+    font-size: 18px;
+    letter-spacing: 2px;
+}
+
+nav a {
+    text-decoration: none;
+    color: black;
+    position: relative;
+    letter-spacing: 2px;
+}
+
+nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0;
+    height: 1px;
+    background: black;
+    transition: width 0.45s ease;
+}
+
+nav a:hover::after {
+    width: 100%;
+}
+
+.home {
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    padding: 3rem 1rem;
+    padding-top: 40px;
 }
 
-.landing-art {
-    text-align: center;
-}
-
-.hero-image {
-    width: 420px;
-    max-width: 90%;
+.cover-image {
+    width: 35vw;
+    max-width: 500px;
     height: auto;
-    border: 1px solid #111;
-    padding: 10px;
-    background: white;
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
 }
 
 .coming-soon {
-    margin-top: 1.8rem;
-    font-size: 0.9rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
+    margin-top: 30px;
+    font-size: 22px;
+    letter-spacing: 3px;
 }
 
-.subtitle {
-    margin-top: 0.8rem;
-    font-size: 1rem;
-    font-style: italic;
-    letter-spacing: 0.5px;
+.text-page {
+    max-width: 700px;
+    margin: 100px auto;
+    line-height: 1.8;
+    padding: 0 20px;
 }
 
-/* SUBTLE FADE IN */
-.landing-art {
-    text-align: center;
-    opacity: 0;
-    transform: translateY(8px);
-    animation: fadeInPage 1.6s ease forwards;
+.submissions-layout {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 80px;
+    padding: 80px;
 }
 
-@keyframes fadeInPage {
+.submission-text {
+    width: 50%;
+    max-width: 650px;
+    line-height: 1.8;
+}
+
+.submission-image {
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    position: sticky;
+    top: 120px;
+    margin-top: 30px;
+}
+
+.submission-image img {
+    width: 100%;
+    max-width: 650px;
+    height: auto;
+}
+
+/* PAGE FADE IN */
+body {
+    animation: fadeIn 1.2s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
     to {
         opacity: 1;
         transform: translateY(0);
     }
 }
 
+.home-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    padding: 30px 0;
+}
+
 .logo {
+    width: 320px;
+    height: auto;
+}
+
+.logo-link::after {
+    display: none;
+}
+
+.nav-links {
+    display: flex;
+    gap: 50px;
+}
+
+
+/* SCROLLING BANNER */
+.ticker-wrap {
+    width: 100%;
+    overflow: hidden;
+    background: black;
+    padding: 14px 0;
+    margin: 30px 0;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.ticker-track {
+    display: inline-flex;
+    white-space: nowrap;
+    animation: scrollTicker 24s linear infinite;
+}
+
+.ticker-track span {
+    color: white;
+    font-family: "Angsana New", Georgia, serif;
+    font-size: 22px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding-right: 80px;
+}
+
+.ticker-link {
+    text-decoration: none;
+    display: block;
+}
+
+.ticker-wrap:hover {
+    opacity: 0.85;
+}
+
+@keyframes scrollTicker {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+.submission-text {
+    width: 50%;
+    max-width: 650px;
+    line-height: 1.8;
+}
+
+.submission-text h1 {
+    font-size: 42px;
+    margin-bottom: 30px;
+    letter-spacing: 2px;
+}
+
+.submission-intro {
+    font-size: 24px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.submission-details {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+.detail-block h2 {
+    font-size: 14px;
+    letter-spacing: 3px;
+    margin-bottom: 8px;
+    font-weight: normal;
+}
+
+.detail-block p {
     margin: 0;
 }
 
-.logo-image {
-    width: 260px;
-    max-width: 90%;
-    height: auto;
+.detail-block:last-child p {
+    font-size: 22px;
 }
 
-.logo-image {
-    width: 260px;
-    max-width: 90%;
+/* sub image hover animation border */
+
+.image-frame {
+    position: relative;
+    display: inline-block;
+    transform: translateZ(0);
+}
+
+.image-frame img {
+    width: 100%;
+    max-width: 700px;
     height: auto;
+    display: block;
+}
+
+/* animated border */
+.image-frame {
+    position: relative;
+    display: inline-block;
+}
+
+.image-frame img {
+    width: 100%;
+    max-width: 700px;
+    height: auto;
+    display: block;
+
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    image-rendering: auto;
+}
+
+/* top-left corner drawing */
+.image-frame::before {
+    content: "";
+    position: absolute;
+    inset: -8px;
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+    clip-path: inset(0 100% 100% 0);
+    transition: clip-path 1s ease;
+    pointer-events: none;
+}
+
+/* bottom-right corner drawing */
+.image-frame::after {
+    content: "";
+    position: absolute;
+    inset: -8px;
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
+    clip-path: inset(100% 0 0 100%);
+    transition: clip-path 1s ease;
+    pointer-events: none;
+}
+
+.image-frame:hover::before {
+    clip-path: inset(0 0 0 0);
+}
+
+.image-frame:hover::after {
+    clip-path: inset(0 0 0 0);
+}
+
+.image-quote {
+    position: absolute;
+    left: -55px;
+    top: 50%;
+    transform: translateY(-50%) rotate(-180deg);
+    writing-mode: vertical-rl;
+
+    font-style: italic;
+    font-size: 22px;
+    letter-spacing: 1px;
+    line-height: 1.4;
+    white-space: nowrap;
+
     opacity: 0;
-    animation: fadeInLogo 1.2s ease forwards;
+    transition: opacity 1.2s ease;
+
+    pointer-events: none;
 }
 
-@keyframes fadeInLogo {
-    to {
-        opacity: 1;
+/* fade in on hover */
+.image-frame:hover .image-quote {
+    opacity: 1;
+    transition: opacity 1.2s ease;
+    animation: softPulse 2.8s ease-in-out infinite;
+}
+
+@keyframes softPulse {
+    0% {
+        filter: opacity(0.70);
     }
+    50% {
+        filter: opacity(1);
+    }
+    100% {
+        filter: opacity(0.70);
+    }
+}
+
+.hidden-piece-link {
+    text-decoration: none;
+    color: inherit;
+    display: inline-block;
+}
+
+.essay-page {
+    max-width: 720px;
+    margin: 100px auto;
+    padding: 0 30px;
+    line-height: 1.9;
+    font-size: 19px;
+}
+
+.essay-page h1 {
+    font-style: italic;
+    font-weight: normal;
+    margin-bottom: 50px;
+}
+
+.return-illustration-link {
+    display: flex;
+    justify-content: center;
+    margin: 80px 0 40px 0;
+    text-decoration: none;
+}
+
+.return-illustration {
+    width: 375px;
+    height: auto;
+    transition: transform 0.8s ease, opacity 0.8s ease;
+    cursor: pointer;
+    animation: gentlePulse 3s ease-in-out infinite;
+}
+
+@keyframes gentlePulse {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+    100% { transform: translateY(0); }
+}
+
+.return-illustration:hover {
+    transform: translateY(-6px);
+    opacity: 0.8;
+}
+
+.site-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+
+    margin-top: 100px;
+    padding: 30px 0;
+
+    font-size: 13px;
+    letter-spacing: 2px;
+    border-top: 1px solid black;
+}
+
+.footer-link {
+    text-decoration: none;
+    color: black;
+    position: relative;
+}
+
+/* matching nav underline hover */
+.footer-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    width: 0;
+    height: 1px;
+    background: black;
+    transition: width 0.45s ease;
+}
+
+.footer-link:hover::after {
+    width: 100%;
+}
+.section-title-svg {
+    width: 600px;
+    height: auto;
+    display: block;
+    margin-bottom: 30px;
+    margin-left: 15px;
 }
