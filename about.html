@@ -253,15 +253,24 @@
             });
 
             // ── Touch drag ──
+            let lastTap = 0;
             el.addEventListener('touchstart', e => {
+                const now = Date.now();
                 e.preventDefault();
-                const t = e.touches[0];
-                beginDrag(body, t.clientX, t.clientY);
+                if (now - lastTap < 300) {
+                    explode(body);
+                } else {
+                    const t = e.touches[0];
+                    beginDrag(body, t.clientX, t.clientY);
+                }
+                lastTap = now;
             }, { passive: false });
 
             el.addEventListener('dblclick', e => {
             e.preventDefault();
             explode(body);
+
+            
 });
         });
     }
