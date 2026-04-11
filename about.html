@@ -147,6 +147,64 @@
     let mouseVelX   = 0;
     let mouseVelY   = 0;
 
+
+    // ----------------------
+    // explode envelopes
+    //------------------------
+
+    function explode(body) {
+    const cx = body.x + body.w / 2;
+    const cy = body.y + body.h / 2;
+    const count = 18;
+
+    for (let i = 0; i < count; i++) {
+        const heart = document.createElement('div');
+        const angle = (i / count) * Math.PI * 2;
+        const speed = 2.5 + Math.random() * 3.5;
+        const size  = 8 + Math.random() * 10;
+
+        heart.style.cssText = `
+            position: fixed;
+            left: ${cx}px;
+            top: ${cy}px;
+            width: ${size}px;
+            height: ${size}px;
+            pointer-events: none;
+            z-index: 9999;
+            font-size: ${size}px;
+            line-height: 1;
+            color: #000;
+            transform: translate(-50%, -50%);
+        `;
+        heart.textContent = '♥';
+        document.body.appendChild(heart);
+
+        let vx = Math.cos(angle) * speed;
+        let vy = Math.sin(angle) * speed;
+        let opacity = 1;
+        let x = cx, y = cy;
+
+        function step() {
+            vx *= 0.94;
+            vy *= 0.94;
+            vy += 0.12;
+            x += vx;
+            y += vy;
+            opacity -= 0.022;
+            heart.style.left    = x + 'px';
+            heart.style.top     = y + 'px';
+            heart.style.opacity = opacity;
+            if (opacity > 0) requestAnimationFrame(step);
+            else heart.remove();
+        }
+        requestAnimationFrame(step);
+    }
+
+    // Remove the envelope
+    body.el.remove();
+    bodies.splice(bodies.indexOf(body), 1);
+}
+
     // ─────────────────────────────────────────────────────────────
     //  BUILD ENVELOPES
     // ─────────────────────────────────────────────────────────────
@@ -200,6 +258,11 @@
                 const t = e.touches[0];
                 beginDrag(body, t.clientX, t.clientY);
             }, { passive: false });
+
+            el.addEventListener('dblclick', e => {
+            e.preventDefault();
+            explode(body);
+});
         });
     }
 
