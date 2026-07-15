@@ -1,10 +1,37 @@
+/* =========================
+   BASE
+========================= */
+
 body {
     margin: 0;
     padding: 0;
     background: white;
     color: black;
-    font-family: "Angsana New", Georgia, serif;
+    font-family: Georgia, serif;
+    animation: fadeIn 1.2s ease;
 }
+
+a {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* =========================
+   NAVIGATION
+========================= */
 
 nav {
     display: flex;
@@ -16,9 +43,9 @@ nav {
 }
 
 nav a {
-    text-decoration: none;
-    color: black;
     position: relative;
+    color: black;
+    text-decoration: none;
     letter-spacing: 2px;
 }
 
@@ -27,86 +54,12 @@ nav a::after {
     position: absolute;
     left: 0;
     bottom: -4px;
+
     width: 0;
     height: 1px;
+
     background: black;
     transition: width 0.45s ease;
-}
-
-nav a:hover::after {
-    width: 100%;
-}
-
-.home {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 40px;
-}
-
-.cover-image {
-    width: 35vw;
-    max-width: 500px;
-    height: auto;
-}
-
-.coming-soon {
-    margin-top: 30px;
-    font-size: 22px;
-    letter-spacing: 3px;
-}
-
-.text-page {
-    max-width: 700px;
-    margin: 100px auto;
-    line-height: 1.8;
-    padding: 0 20px;
-}
-
-.submissions-layout {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 60px;
-
-    padding: 60px 6vw;
-}
-
-.submission-text {
-    flex: 1 1 55%;
-    min-width: 320px;
-    max-width: 650px;
-    line-height: 1.8;
-}
-
-.submission-image {
-    flex: 1 1 45%;
-    min-width: 280px;
-    display: flex;
-    justify-content: center;
-    margin-left: 100px;
-}
-
-.submission-image img {
-    width: 100%;
-    max-width: 700px;
-    height: auto;
-}
-
-/* PAGE FADE IN */
-body {
-    animation: fadeIn 1.2s ease;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(8px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
 
 .home-nav {
@@ -132,15 +85,50 @@ body {
 }
 
 
-/* SCROLLING BANNER */
+/* =========================
+   HOME
+========================= */
+
+.home {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 40px;
+}
+
+.cover-image {
+    width: 35vw;
+    max-width: 500px;
+    height: auto;
+}
+
+.coming-soon {
+    margin-top: 30px;
+    font-size: 22px;
+    letter-spacing: 3px;
+}
+
+
+/* =========================
+   SCROLLING BANNER
+========================= */
+
+.ticker-link {
+    display: block;
+    text-decoration: none;
+}
+
 .ticker-wrap {
     width: 100%;
     overflow: hidden;
-    background: black;
-    padding: 14px 0;
+
     margin: 30px 0;
+    padding: 14px 0;
+
+    background: black;
     border-top: 1px solid white;
     border-bottom: 1px solid white;
+
     cursor: pointer;
     transition: opacity 0.3s ease;
 }
@@ -153,61 +141,82 @@ body {
 
 .ticker-track span {
     color: white;
-    font-family: "Angsana New", Georgia, serif;
+    font-family: Georgia, serif;
     font-size: 22px;
     letter-spacing: 3px;
     text-transform: uppercase;
     padding-right: 80px;
 }
 
-.ticker-link {
-    text-decoration: none;
-    display: block;
-}
-
-.ticker-wrap:hover {
-    opacity: 0.85;
-}
-
 @keyframes scrollTicker {
     from {
         transform: translateX(0);
     }
+
     to {
         transform: translateX(-50%);
     }
 }
 
+
+/* =========================
+   GENERAL TEXT PAGE
+========================= */
+
+.text-page {
+    max-width: 700px;
+    margin: 100px auto;
+    padding: 0 20px;
+    line-height: 1.8;
+}
+
+
+/* =========================
+   SUBMISSIONS
+========================= */
+
+.submissions-layout {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 60px;
+
+    padding: 60px 6vw;
+}
+
 .submission-text {
+    flex: 1 1 55%;
     width: 50%;
+    min-width: 320px;
     max-width: 650px;
     line-height: 1.8;
 }
 
 .submission-text h1 {
-    font-size: 42px;
     margin-bottom: 30px;
+    font-size: 42px;
     letter-spacing: 2px;
 }
 
 .submission-intro {
+    margin-bottom: 30px;
     font-size: 24px;
     line-height: 1.6;
-    margin-bottom: 30px;
 }
 
 .submission-details {
-    margin-top: 50px;
     display: flex;
     flex-direction: column;
     gap: 28px;
+
+    margin-top: 50px;
 }
 
 .detail-block h2 {
-    font-size: 14px;
-    letter-spacing: 3px;
     margin-bottom: 8px;
+    font-size: 14px;
     font-weight: normal;
+    letter-spacing: 3px;
 }
 
 .detail-block p {
@@ -218,7 +227,42 @@ body {
     font-size: 22px;
 }
 
-/* sub image hover animation border */
+.section-title-svg {
+    display: block;
+
+    width: 100%;
+    max-width: 460px;
+    height: auto;
+
+    margin-bottom: 30px;
+}
+
+.submission-image {
+    flex: 1 1 45%;
+    min-width: 280px;
+
+    display: flex;
+    justify-content: center;
+
+    margin-left: 100px;
+}
+
+.submission-image img {
+    width: 100%;
+    max-width: 700px;
+    height: auto;
+}
+
+
+/* =========================
+   SUBMISSION IMAGE
+========================= */
+
+.hidden-piece-link {
+    display: inline-block;
+    color: inherit;
+    text-decoration: none;
+}
 
 .image-frame {
     position: relative;
@@ -227,70 +271,49 @@ body {
 }
 
 .image-frame img {
+    display: block;
+
     width: 100%;
     max-width: 700px;
     height: auto;
-    display: block;
-}
-
-/* animated border */
-.image-frame {
-    position: relative;
-    display: inline-block;
-}
-
-.image-frame img {
-    width: 100%;
-    max-width: 700px;
-    height: auto;
-    display: block;
 
     transform: translateZ(0);
     backface-visibility: hidden;
     image-rendering: auto;
 }
 
-/* top-left corner drawing */
-.image-frame::before {
-    content: "";
-    position: absolute;
-    inset: -8px;
-    border-top: 1px solid black;
-    border-left: 1px solid black;
-    clip-path: inset(0 100% 100% 0);
-    transition: clip-path 1s ease;
-    pointer-events: none;
-}
-
-/* bottom-right corner drawing */
+.image-frame::before,
 .image-frame::after {
     content: "";
     position: absolute;
     inset: -8px;
-    border-bottom: 1px solid black;
-    border-right: 1px solid black;
-    clip-path: inset(100% 0 0 100%);
-    transition: clip-path 1s ease;
+
     pointer-events: none;
+    transition: clip-path 1s ease;
 }
 
-.image-frame:hover::before {
-    clip-path: inset(0 0 0 0);
+.image-frame::before {
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+    clip-path: inset(0 100% 100% 0);
 }
 
-.image-frame:hover::after {
-    clip-path: inset(0 0 0 0);
+.image-frame::after {
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    clip-path: inset(100% 0 0 100%);
 }
 
 .image-quote {
     position: absolute;
     left: -55px;
     top: 50%;
+
     transform: translateY(-50%) rotate(-180deg);
     writing-mode: vertical-rl;
 
-    font-style: italic;
     font-size: 22px;
+    font-style: italic;
     letter-spacing: 1px;
     line-height: 1.4;
     white-space: nowrap;
@@ -301,70 +324,79 @@ body {
     pointer-events: none;
 }
 
-/* fade in on hover */
-.image-frame:hover .image-quote {
-    opacity: 1;
-    transition: opacity 1.2s ease;
-    animation: softPulse 2.8s ease-in-out infinite;
-}
-
 @keyframes softPulse {
     0% {
-        filter: opacity(0.70);
+        filter: opacity(0.7);
     }
+
     50% {
         filter: opacity(1);
     }
+
     100% {
-        filter: opacity(0.70);
+        filter: opacity(0.7);
     }
 }
 
-.hidden-piece-link {
-    text-decoration: none;
-    color: inherit;
-    display: inline-block;
-}
+
+/* =========================
+   ESSAY PAGE
+========================= */
 
 .essay-page {
     max-width: 720px;
     margin: 100px auto;
     padding: 0 30px;
-    line-height: 1.9;
+
     font-size: 19px;
+    line-height: 1.9;
 }
 
 .essay-page h1 {
+    margin-bottom: 50px;
     font-style: italic;
     font-weight: normal;
-    margin-bottom: 50px;
 }
 
 .return-illustration-link {
     display: flex;
     justify-content: center;
-    margin: 80px 0 40px 0;
+
+    margin: 80px 0 40px;
     text-decoration: none;
 }
 
 .return-illustration {
     width: 375px;
     height: auto;
-    transition: transform 0.8s ease, opacity 0.8s ease;
+
     cursor: pointer;
+
+    transition:
+        transform 0.8s ease,
+        opacity 0.8s ease;
+
     animation: gentlePulse 3s ease-in-out infinite;
 }
 
 @keyframes gentlePulse {
-    0% { transform: translateY(0); }
-    50% { transform: translateY(-3px); }
-    100% { transform: translateY(0); }
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-3px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
 }
 
-.return-illustration:hover {
-    transform: translateY(-6px);
-    opacity: 0.8;
-}
+
+/* =========================
+   FOOTER
+========================= */
 
 .site-footer {
     display: flex;
@@ -375,42 +407,326 @@ body {
     margin-top: 100px;
     padding: 30px 0;
 
+    border-top: 1px solid black;
+
     font-size: 13px;
     letter-spacing: 2px;
-    border-top: 1px solid black;
 }
 
 .footer-link {
-    text-decoration: none;
-    color: black;
     position: relative;
+    color: black;
+    text-decoration: none;
 }
 
-/* matching nav underline hover */
 .footer-link::after {
     content: "";
     position: absolute;
     left: 0;
     bottom: -3px;
+
     width: 0;
     height: 1px;
+
     background: black;
     transition: width 0.45s ease;
 }
 
-.footer-link:hover::after {
-    width: 100%;
+
+/* =========================
+   EVENTS
+========================= */
+
+.events-page {
+    padding: 60px 6vw 100px;
 }
 
-.section-title-svg {
-    width: 100%;
-    max-width: 460px;
-    height: auto;
-    display: block;
-    margin-bottom: 30px;
+.event-hero {
+    display: grid;
+    grid-template-columns:
+        minmax(300px, 0.9fr)
+        minmax(400px, 1.1fr);
+
+    gap: clamp(50px, 8vw, 130px);
+    align-items: start;
+
+    max-width: 1400px;
+    margin: 0 auto;
 }
+
+
+/* =========================
+   EVENT POSTER
+========================= */
+
+.event-poster {
+    position: sticky;
+    top: 50px;
+}
+
+.event-poster img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+/* two opposite corners */
+
+.event-poster::before,
+.event-poster::after {
+    content: "";
+    position: absolute;
+    inset: -8px;
+
+    pointer-events: none;
+    transition: clip-path 1s ease;
+}
+
+.event-poster::before {
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+
+    clip-path: inset(0 100% 100% 0);
+}
+
+.event-poster::after {
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+
+    clip-path: inset(100% 0 0 100%);
+}
+
+
+/* EVENT INFORMATION */
+
+.event-info {
+    max-width: 620px;
+}
+
+.event-label {
+    margin-bottom: 25px;
+    font-size: 13px;
+    letter-spacing: 0.18em;
+}
+
+.event-info h1 {
+    margin: 0 0 25px;
+
+    font-size: clamp(42px, 5vw, 78px);
+    font-weight: normal;
+    line-height: 0.9;
+}
+
+.event-date {
+    margin-bottom: 40px;
+    font-size: 22px;
+    font-style: italic;
+}
+
+.event-info p {
+    font-size: 18px;
+    line-height: 1.65;
+}
+
+
+/* LINEUP */
+
+.event-lineup {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+
+    margin: 50px 0;
+}
+
+.event-detail h2 {
+    margin-bottom: 15px;
+
+    font-size: 13px;
+    font-weight: normal;
+    letter-spacing: 0.15em;
+}
+
+.event-detail p {
+    font-size: 19px;
+    line-height: 1.7;
+}
+
+.lineup-links a {
+    position: relative;
+    color: black;
+    text-decoration: none;
+}
+
+
+/* TICKET BUTTON */
+
+.ticket-button {
+    display: inline-block;
+
+    margin-top: 35px;
+    padding: 14px 35px;
+
+    border: 1px solid black;
+
+    color: black;
+    text-decoration: none;
+
+    font-size: 15px;
+    letter-spacing: 0.12em;
+
+    transition:
+        background-color 0.4s ease,
+        color 0.4s ease;
+}
+
+
+/* ARTISTS */
+
+.event-artists {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(50px, 10vw, 160px);
+
+    max-width: 1100px;
+
+    margin: 140px auto 0;
+    padding-top: 60px;
+
+    border-top: 1px solid black;
+}
+
+.artist-profile h2 {
+    margin-bottom: 25px;
+    font-size: 30px;
+    font-weight: normal;
+}
+
+.artist-profile p {
+    font-size: 18px;
+    line-height: 1.7;
+}
+
+
+/* VENUE */
+
+.event-venue {
+    max-width: 1100px;
+
+    margin: 120px auto 0;
+    padding-top: 50px;
+
+    border-top: 1px solid black;
+}
+
+.event-venue h2 {
+    font-size: 30px;
+    font-weight: normal;
+}
+
+.event-venue p {
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+
+/* ARTIST + VENUE LINKS */
+
+.lineup-links a,
+.artist-profile h2 a,
+.event-venue h2 a {
+    position: relative;
+    color: black;
+    text-decoration: none;
+}
+
+.artist-profile h2 a,
+.event-venue h2 a {
+    display: inline-block;
+}
+
+.lineup-links a::after,
+.artist-profile h2 a::after,
+.event-venue h2 a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+
+    width: 100%;
+    height: 1px;
+
+    background: black;
+
+    transform: scaleX(0);
+    transform-origin: left;
+
+    transition: transform 0.6s ease;
+}
+
+.lineup-links a::after {
+    bottom: -2px;
+}
+
+.artist-profile h2 a::after,
+.event-venue h2 a::after {
+    bottom: -4px;
+}
+
+
+/* =========================
+   DESKTOP HOVER ONLY
+========================= */
+
+@media (hover: hover) and (pointer: fine) {
+
+    nav a:hover::after,
+    .footer-link:hover::after {
+        width: 100%;
+    }
+
+    .ticker-wrap:hover {
+        opacity: 0.85;
+    }
+
+    .image-frame:hover::before,
+    .image-frame:hover::after {
+        clip-path: inset(0 0 0 0);
+    }
+
+    .image-frame:hover .image-quote {
+        opacity: 1;
+        animation: softPulse 2.8s ease-in-out infinite;
+    }
+
+    .return-illustration:hover {
+        transform: translateY(-6px);
+        opacity: 0.8;
+    }
+
+    .ticket-button:hover {
+        background-color: black;
+        color: white;
+    }
+
+    .lineup-links a:hover::after,
+    .artist-profile h2 a:hover::after,
+    .event-venue h2 a:hover::after {
+        transform: scaleX(1);
+    }
+
+    .event-poster:hover::before,
+    .event-poster:hover::after {
+        clip-path: inset(0 0 0 0);
+    }
+}
+
+
+/* =========================
+   SUBMISSIONS TABLET
+========================= */
 
 @media (max-width: 1100px) {
+
     .submissions-layout {
         flex-direction: column;
         gap: 50px;
@@ -424,6 +740,7 @@ body {
 
     .submission-image {
         justify-content: flex-start;
+        margin-left: 0;
     }
 
     .section-title-svg {
@@ -431,11 +748,84 @@ body {
     }
 }
 
+
+/* =========================
+   EVENTS MOBILE
+========================= */
+
+@media (max-width: 850px) {
+
+    .events-page {
+        padding: 35px 20px 70px;
+    }
+
+    .event-hero {
+        grid-template-columns: 1fr;
+        gap: 55px;
+    }
+
+    .event-poster {
+        position: static;
+
+        width: 100%;
+        max-width: 500px;
+
+        margin: 0 auto;
+    }
+
+    .event-info {
+        max-width: 100%;
+    }
+
+    .event-info h1 {
+        font-size: clamp(40px, 12vw, 65px);
+    }
+
+    .event-lineup {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+
+    .event-artists {
+        grid-template-columns: 1fr;
+        gap: 60px;
+
+        margin-top: 90px;
+    }
+
+    .event-venue {
+        margin-top: 90px;
+    }
+
+    .ticket-button {
+        width: 100%;
+        box-sizing: border-box;
+        text-align: center;
+    }
+}
+
+
+/* =========================
+   GENERAL MOBILE
+========================= */
+
 @media (max-width: 768px) {
+
+    nav {
+        padding: 24px 15px;
+    }
+
+    .nav-links {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 18px 25px;
+    }
+
     .submissions-layout {
         flex-direction: column;
-        padding: 30px 20px;
         gap: 40px;
+
+        padding: 30px 20px;
     }
 
     .submission-text,
@@ -460,9 +850,9 @@ body {
         width: 100%;
         max-width: 340px;
         height: auto;
-        display: block;
-        margin: 0 auto 30px auto;
-}
+
+        margin: 0 auto 30px;
+    }
 
     .submission-intro {
         font-size: 18px;
@@ -481,7 +871,74 @@ body {
     .site-footer {
         flex-direction: column;
         gap: 10px;
+
         font-size: 12px;
         text-align: center;
+    }
+}
+
+
+/* =========================
+   TOUCH DEVICES
+========================= */
+
+@media (hover: none) and (pointer: coarse) {
+
+    nav a::after,
+    .footer-link::after,
+    .lineup-links a::after,
+    .artist-profile h2 a::after,
+    .event-venue h2 a::after,
+    .image-frame::before,
+    .image-frame::after {
+        display: none;
+    }
+
+    .image-quote {
+        display: none;
+    }
+
+    .lineup-links a,
+    .artist-profile h2 a,
+    .event-venue h2 a {
+        text-decoration: underline;
+        text-decoration-thickness: 1px;
+        text-underline-offset: 3px;
+    }
+
+    .ticket-button:active {
+        background-color: black;
+        color: white;
+    }
+
+    .event-poster::before,
+    .event-poster::after {
+        display: none;
+    }
+
+    .event-poster {
+        border: 1px solid black;
+        box-sizing: border-box;
+    }
+}
+
+
+/* =========================
+   REDUCED MOTION
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    body,
+    .ticker-track,
+    .return-illustration {
+        animation: none;
+    }
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
     }
 }
