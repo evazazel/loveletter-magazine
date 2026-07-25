@@ -39,8 +39,17 @@
 
 
     <main class="home">
-        <img src="escher-letter-hands.png" alt="Magazine Cover" class="cover-image">
-        <p class="coming-soon">COMING SOON 9/8/26</p>
+
+        <a href="https://dice.fm/event/yox5xr-the-love-letter-magazine-launch-party-9th-aug-the-george-tavern-london-tickets"
+       class="magazine-3d-link"
+       aria-label="Buy tickets — Issue 1 launch party">
+
+            <canvas class="magazine-3d-canvas" id="magazine-canvas"></canvas>
+
+        </a>
+
+        <p class="coming-soon">9/8/26</p>
+
     </main>
 
 <footer class="site-footer">
@@ -49,6 +58,310 @@
     </a>
     <span>© 2026 THE LOVE LETTER</span>
 </footer>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
+  }
+}
+</script>
+
+<script type="module">
+import * as THREE from "three";
+ 
+/* ---------------------------------------------------------
+   1. REPLACE THESE with your real image paths.
+      front / back should be portrait, roughly matching your
+      actual cover proportions. Spine can be a thin vertical
+      strip or the same file — texture code below handles cropping.
+--------------------------------------------------------- */
+const IMAGE_PATHS = {
+  front: "FRONT_COVER.png", // e.g. "cover-front.jpg"
+  back:  "BACK_COVER.png", // e.g. "cover-back.jpg"
+  spine: "SPINE.png", // e.g. "cover-spine.jpg"
+};
+ 
+const container = document.getElementById("magazine-canvas");
+const link = container.closest(".magazine-3d-link");
+ 
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+ 
+/* ---------------------------------------------------------
+   2. Scene setup
+--------------------------------------------------------- */
+const scene = new THREE.Scene();
+ 
+const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 100);
+camera.position.set(0, -0.25, 8.9);
+ 
+const renderer = new THREE.WebGLRenderer({
+  canvas: container,
+  antialias: true,
+  alpha: true,
+});
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+ 
+function resize() {
+  const w = container.clientWidth;
+  const h = container.clientHeight;
+  renderer.setSize(w, h, false);
+  camera.aspect = w / h;
+  camera.updateProjectionMatrix();
+}
+window.addEventListener("resize", resize);
+ 
+/* ---------------------------------------------------------
+   3. Lighting — soft studio setup so the covers read clearly
+--------------------------------------------------------- */
+scene.add(new THREE.AmbientLight(0xffffff, 0.99));
+ 
+const keyLight = new THREE.DirectionalLight(0xffffff, 2.0);
+keyLight.position.set(5, 6, 8);
+scene.add(keyLight);
+
+const fillLight = new THREE.DirectionalLight(0xffffff, 0.8);
+fillLight.position.set(-5, 2, 4);
+scene.add(fillLight);
+ 
+const rimLight = new THREE.DirectionalLight(0xffffff, 1.2);
+rimLight.position.set(-6, 4, -5);
+ 
+/* ---------------------------------------------------------
+   4. Placeholder cover art (procedural canvas textures).
+      Swap for real photo textures once you have image files —
+      see loadRealTextures() further down, currently unused.
+--------------------------------------------------------- */
+ 
+function makeSpineTexture() {
+  const c = document.createElement("canvas");
+  c.width = 128;
+  c.height = 1024;
+  const ctx = c.getContext("2d");
+  ctx.fillStyle = "#111111";
+  ctx.fillRect(0, 0, c.width, c.height);
+  ctx.save();
+  ctx.translate(c.width / 2, c.height / 2);
+  ctx.rotate(-Math.PI / 2);
+  ctx.fillStyle = "#ffffff";
+  ctx.textAlign = "center";
+  ctx.font = "600 34px Georgia, serif";
+  ctx.fillText("THE LOVE LETTER · ISSUE 1", 0, 10);
+  ctx.restore();
+  const tex = new THREE.CanvasTexture(c);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  return tex;
+}
+ 
+function makePageEdgeTexture() {
+  const c = document.createElement("canvas");
+  c.width = 64;
+  c.height = 64;
+  const ctx = c.getContext("2d");
+  ctx.fillStyle = "#f2ede2";
+  ctx.fillRect(0, 0, 64, 64);
+  ctx.strokeStyle = "rgba(0,0,0,0.08)";
+  for (let i = 0; i < 64; i += 3) {
+    ctx.beginPath();
+    ctx.moveTo(0, i);
+    ctx.lineTo(64, i);
+    ctx.stroke();
+  }
+  const tex = new THREE.CanvasTexture(c);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  return tex;
+}
+ 
+const loader = new THREE.TextureLoader();
+
+const frontTex = loader.load(IMAGE_PATHS.front);
+const backTex  = loader.load(IMAGE_PATHS.back);
+const spineTex = loader.load(IMAGE_PATHS.spine);
+
+frontTex.colorSpace = THREE.SRGBColorSpace;
+backTex.colorSpace = THREE.SRGBColorSpace;
+spineTex.colorSpace = THREE.SRGBColorSpace;
+
+const edgeTex = makePageEdgeTexture();
+ 
+/* ---------------------------------------------------------
+   5. Once you have real files, use this instead of the
+      procedural textures above:
+ 
+   function loadRealTextures() {
+     const loader = new THREE.TextureLoader();
+     return {
+       front: loader.load(IMAGE_PATHS.front),
+       back:  loader.load(IMAGE_PATHS.back),
+       spine: loader.load(IMAGE_PATHS.spine),
+     };
+   }
+--------------------------------------------------------- */
+ 
+/* ---------------------------------------------------------
+   6. Build the magazine as a thin box.
+      Face order for BoxGeometry materials array:
+      [+X right, -X left(spine), +Y top, -Y bottom, +Z front, -Z back]
+--------------------------------------------------------- */
+// True A5 proportions (148mm x 210mm), scaled into scene units.
+// DEPTH assumes a saddle-stitched mag ~6mm thick — bump it up if yours
+// is perfect-bound / thicker, e.g. DEPTH_MM = 12.
+const MM_WIDTH = 148;
+const MM_HEIGHT = 210;
+const MM_DEPTH = 4;
+const SCALE = 0.02;
+ 
+const WIDTH = MM_WIDTH * SCALE;
+const HEIGHT = MM_HEIGHT * SCALE;
+const DEPTH = MM_DEPTH * SCALE;
+ 
+const geometry = new THREE.BoxGeometry(WIDTH, HEIGHT, DEPTH);
+ 
+const pageEdgeMaterial = new THREE.MeshStandardMaterial({ map: edgeTex, roughness: 0.9 });
+const spineMaterial = new THREE.MeshStandardMaterial({ map: spineTex, roughness: 0.6 });
+const frontMaterial = new THREE.MeshStandardMaterial({ map: frontTex, roughness: 0.4 });
+const backMaterial = new THREE.MeshStandardMaterial({ map: backTex, roughness: 0.4 });
+ 
+const materials = [
+  pageEdgeMaterial, // +X right (page edges)
+  spineMaterial,    // -X left (spine)
+  pageEdgeMaterial, // +Y top
+  pageEdgeMaterial, // -Y bottom
+  frontMaterial,    // +Z front cover
+  backMaterial,     // -Z back cover
+];
+ 
+const magazine = new THREE.Mesh(geometry, materials);
+
+/* ---------------------------------------------------------
+   Soft radial gradient shadow (dark center, fading to transparent)
+--------------------------------------------------------- */
+function makeShadowTexture() {
+  const size = 256;
+  const c = document.createElement("canvas");
+  c.width = size;
+  c.height = size;
+  const ctx = c.getContext("2d");
+
+  const gradient = ctx.createRadialGradient(
+    size / 2, size / 2, 0,      // inner circle (center)
+    size / 2, size / 2, size / 2 // outer circle (edge)
+  );
+  gradient.addColorStop(0, "rgba(0,0,0,0.35)");   // darkest at center
+  gradient.addColorStop(0.4, "rgba(0,0,0,0.22)");
+  gradient.addColorStop(0.75, "rgba(0,0,0,0.08)");
+  gradient.addColorStop(1, "rgba(0,0,0,0)");      // fully transparent at edge
+
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, size, size);
+
+  const tex = new THREE.CanvasTexture(c);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  return tex;
+}
+
+const shadowTex = makeShadowTexture();
+
+const shadow = new THREE.Mesh(
+  new THREE.CircleGeometry(1.5, 32), // more segments = smoother circle
+  new THREE.MeshBasicMaterial({
+    map: shadowTex,
+    transparent: true,
+    depthWrite: false, // avoids z-fighting with the floor/other flat objects
+  })
+);
+
+shadow.rotation.x = -Math.PI / 2;
+shadow.position.y = -2.5;
+scene.add(shadow);
+
+
+scene.add(magazine);
+
+ 
+// Start angled so both the front cover and spine are visible immediately
+magazine.rotation.y = -0.5;
+magazine.rotation.x = 0.05;
+ 
+
+/* ---------------------------------------------------------
+   7. Interaction: PS2-style object select effect —
+      squash/stretch pop + wobble + specular glow flash
+--------------------------------------------------------- */
+let hovering = false;
+let hoverStartTime = 0;
+let wasHovering = false;
+
+link.addEventListener("mouseenter", () => {
+  hovering = true;
+  hoverStartTime = clock.getElapsedTime();
+});
+link.addEventListener("mouseleave", () => (hovering = false));
+
+// Store base intensities so we can pulse them
+const baseRimIntensity = 1.2;
+const baseKeyIntensity = 2.0;
+rimLight.intensity = baseRimIntensity;
+scene.add(rimLight); 
+
+function easeOutElastic(t) {
+  const c4 = (2 * Math.PI) / 3;
+  return t === 0 ? 0 : t === 1 ? 1
+    : Math.pow(2, -10 * t) * Math.sin((t * 10 - 0.75) * c4) + 1;
+}
+
+const clock = new THREE.Clock();
+
+function animate() {
+  requestAnimationFrame(animate);
+  const dt = clock.getDelta();
+  const t = clock.getElapsedTime();
+
+  if (!prefersReducedMotion) {
+    // gentle idle drift always plays
+    magazine.rotation.y += 0.5 * dt;
+    magazine.position.y = Math.sin(t * 0.8) * 0.06;
+
+    if (hovering) {
+      const hoverT = t - hoverStartTime;
+
+      // --- squash & stretch pop-in (only during first ~0.5s of hover) ---
+      const popProgress = Math.min(hoverT / 0.5, 1);
+      const pop = easeOutElastic(popProgress);
+      const scaleX = 1 + pop * 0.12;
+      const scaleY = 1 - pop * 0.08; // squash opposite axis, classic PS2 jelly feel
+      magazine.scale.set(scaleX, scaleY, 1 + pop * 0.05);
+
+      // --- wobble instead of just spinning faster ---
+      magazine.rotation.z = Math.sin(hoverT * 6) * 0.06 * Math.min(hoverT * 2, 1);
+      magazine.rotation.x = 0.05 + Math.sin(hoverT * 4) * 0.05;
+
+      // --- specular shine flash sweeping across the cover ---
+      const flash = Math.max(0, Math.sin(hoverT * 3)) ;
+      rimLight.intensity = baseRimIntensity + flash * 2.5;
+      keyLight.intensity = baseKeyIntensity + flash * 2;
+
+    } else {
+      // ease back to resting state
+      magazine.scale.x += (1 - magazine.scale.x) * 0.15;
+      magazine.scale.y += (1 - magazine.scale.y) * 0.15;
+      magazine.scale.z += (1 - magazine.scale.z) * 0.15;
+      magazine.rotation.z += (0 - magazine.rotation.z) * 0.15;
+      magazine.rotation.x += (0.05 - magazine.rotation.x) * 0.15;
+      rimLight.intensity += (baseRimIntensity - rimLight.intensity) * 0.1;
+      keyLight.intensity += (baseKeyIntensity - keyLight.intensity) * 0.1;
+    }
+
+    shadow.position.y = -2.6;
+    shadow.scale.setScalar(1 - magazine.position.y * 0.015);
+  }
+
+  renderer.render(scene, camera);
+}
+
+resize();
+animate();
+</script>
 
 </body>
 </html>
