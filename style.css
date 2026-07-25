@@ -148,6 +148,23 @@ nav a::after {
     padding-right: 80px;
 }
 
+@media (max-width: 768px) {
+        .ticker-wrap {
+        margin: 20px 0;
+        padding: 8px 0;
+    }
+
+    .ticker-track span {
+        font-size: 12px;
+        letter-spacing: 2px;
+        padding-right: 35px;
+    }
+
+    .ticker-track {
+        animation-duration: 18s;
+    }
+}
+
 @keyframes scrollTicker {
     from {
         transform: translateX(0);
