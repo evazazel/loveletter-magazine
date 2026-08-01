@@ -39,6 +39,57 @@
             pointer-events: none;
             -webkit-user-drag: none;
         }
+
+        /* ---- Typewriter intro ---- */
+        .typewriter-intro {
+            margin-bottom: 2rem;
+        }
+
+        .type-line {
+            font-style: italic;
+            white-space: pre-wrap;
+            min-height: 1em;
+        }
+
+        .type-line .cursor {
+            display: inline-block;
+            width: 0.5em;
+            margin-left: 1px;
+            border-right: 2px solid currentColor;
+            animation: blink 0.8s step-end infinite;
+        }
+
+        .type-line.done .cursor {
+            display: none;
+        }
+
+        @keyframes blink {
+            0%, 100% { border-color: currentColor; }
+            50% { border-color: transparent; }
+        }
+
+        /* ---- Static description, fades in after typing ---- */
+        .about-static {
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity 0.9s ease, transform 0.9s ease;
+        }
+
+        .about-static.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .issue-link {
+            font-style: italic;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            transition: opacity 0.2s ease;
+        }
+
+        .issue-link:hover {
+            opacity: 0.6;
+        }
     </style>
 </head>
 <body>
@@ -50,6 +101,7 @@
     <div class="nav-links">
         <a href="index.html">HOME</a>
         <a href="about.html">ABOUT</a>
+        <a href="issue1.html">ISSUE ONE</a>
         <a href="events.html">EVENTS</a>
         <a href="submissions.html">SUBMISSIONS</a>
     </div>
@@ -57,21 +109,67 @@
 
     <main class="text-page">
         <h1>ABOUT</h1>
-        <p>
-            Writing a love letter is a deeply intimate act with a costly price. The writer of such pages has opted to perform a kind of pre-mortem autopsy for the receiver. They have made a Y-shaped incision, used rib shears to an effective degree, and shifted their left lung aside to bare their heart. Through this bloody ordeal, these letters become a reflection of who we are and what makes us whole.
-        </p>
-        <p>
-            Unlike ordinary correspondence, a love letter aches for a reply. An unspoken contract has formed between the writer and the recipient. I have shown you my heart, please answer. Thus, the pieces in this magazine require such a response from our readers, whether that be rejection and disgust to amorous acceptance and reciprocation.
-        </p>
-        <p>
-            In the eyes of the Romantic, a love letter may take many forms: a bus route you take twice a day, the calluses on your fingers, a receipt kept in your wallet, a peculiar-shaped rock found at the beach, or a jar of baby teeth your mother still keeps around. A love letter can be to a place, a dream, a person, even oneself.
-        </p>
-        <p>
-            The monotony of life is ensnaring: an endless cycle of tasks and an infinite series of choices that make themselves. The trials of living often obscure the act of living itself. And so, it is the quiet compulsion of the Romantic who finds time to remember that we are alive; in living there is love, and in love, there is both beauty and bloody struggle.
-        </p>
-    </main>
 
-    <div class="envelope-layer" id="envelopeLayer"></div>
+        <div class="typewriter-intro" id="typewriterIntro">
+            <p class="type-line" data-text="In the eyes of the Romantic, a love letter may take many forms: a bus route you take twice a day, the calluses on your fingers, a receipt kept in your wallet, a peculiar-shaped rock found at the beach, or a jar of baby teeth your mother still keeps around. A love letter can be to a place, a dream, a person, even oneself."></p>
+            <p class="type-line" data-text="The monotony of life is ensnaring: an endless cycle of tasks and an infinite series of choices that make themselves. The trials of living often obscure the act of living itself. And so, it is the quiet compulsion of the Romantic who finds time to remember that we are alive; in living there is love, and in love, there is both beauty and bloody struggle."></p>
+        </div>
+
+        <div class="about-static" id="aboutStatic">
+            <p>
+                The Love Letter is an independent literary magazine showcasing contemporary poetry, prose and illustration. Founded by a hopeless romantic who believes life should be worth living, The Love Letter embraces the romanticisation of the mundane.
+            </p>
+            <p>
+                Designed as a print publication, the magazine features original artwork, short fiction, poetry, essays and more, with the debut issue, <a href="issue1.html" class="issue-link">Ephemera</a>, bringing together work that explores themes of natural cycles, short-lived moments and transient memories.
+            </p>
+            <p>
+                The inaugural issue marks the beginning of an ongoing publication, with each issue orbiting around a central theme and featuring work from a range of contributors.
+            </p>
+        </div>
+    </main>
+ <div class="envelope-layer" id="envelopeLayer"></div>
+
+    <script>
+        (function () {
+            const lines = Array.from(document.querySelectorAll('#typewriterIntro .type-line'));
+            const staticBlock = document.getElementById('aboutStatic');
+            const CHAR_DELAY = 22;       // ms per character
+            const LINE_PAUSE = 500;      // pause between paragraphs
+
+            function typeLine(line, onDone) {
+                const text = line.getAttribute('data-text');
+                const cursor = document.createElement('span');
+                cursor.className = 'cursor';
+
+                let i = 0;
+                line.textContent = '';
+                line.appendChild(cursor);
+
+                function step() {
+                    if (i < text.length) {
+                        cursor.insertAdjacentText('beforebegin', text.charAt(i));
+                        i++;
+                        setTimeout(step, CHAR_DELAY);
+                    } else {
+                        line.classList.add('done');
+                        setTimeout(onDone, LINE_PAUSE);
+                    }
+                }
+                step();
+            }
+
+            function typeAll(index) {
+                if (index >= lines.length) {
+                    // reveal the static description once typing is finished
+                    requestAnimationFrame(() => staticBlock.classList.add('visible'));
+                    return;
+                }
+                typeLine(lines[index], () => typeAll(index + 1));
+            }
+
+            typeAll(0);
+        })();
+    </script>
 
     <script>
     // ─────────────────────────────────────────────────────────────
