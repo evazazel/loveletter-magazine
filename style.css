@@ -136,7 +136,7 @@ nav a::after {
 .ticker-track {
     display: inline-flex;
     white-space: nowrap;
-    animation: scrollTicker 24s linear infinite;
+    animation: scrollTicker 30s linear infinite;
 }
 
 .ticker-track span {
@@ -1324,3 +1324,50 @@ body.secret-body .song-artist {
     opacity: 0.65;
 }
  
+
+.issue-buy-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
+
+.buy-issue-button {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.9rem 1.5rem;
+    border: 1px solid #000;
+    background: #000;
+    color: #fff;
+    text-decoration: none;
+    text-align: center;
+    font-family: inherit;
+    font-size: 1rem;
+    margin-top: 2rem;
+}
+
+.buy-issue-button:hover {
+    background: #fff;
+    color: #000;
+}
+
+.shipping-note {
+    margin: 0.6rem 0 0;
+    color: #777;
+    font-size: 0.85rem;
+    font-style: italic;
+    text-align: center;
+}
+
+.shipping-note a {
+    color: inherit;
+    text-decoration: underline;
+}
+
+.shipping-note a:hover {
+    color: #000;
+}
+
