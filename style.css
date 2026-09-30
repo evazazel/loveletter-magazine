@@ -84,6 +84,86 @@ nav a::after {
     gap: 50px;
 }
 
+/* ---------- ISSUES DROPDOWN ---------- */
+
+.nav-dropdown {
+    position: relative;
+}
+
+.nav-dropdown-button {
+    position: relative;
+    padding: 0;
+    border: none;
+    background: none;
+    color: black;
+    font-family: Georgia, serif;
+    font-size: 18px;
+    letter-spacing: 2px;
+    cursor: pointer;
+}
+
+.nav-dropdown-button::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+
+    width: 0;
+    height: 1px;
+
+    background: black;
+    transition: width 0.45s ease;
+}
+
+.nav-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 2px);
+    left: 50%;
+    transform: translateX(-50%);
+
+    min-width: 150px;
+
+    background: white;
+    border: 1px solid black;
+
+    padding: 10px 0;
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transition:
+        opacity 0.2s ease,
+        visibility 0.2s ease;
+    
+    z-index: 1000;
+}
+
+.nav-dropdown-menu a {
+    display: block;
+    padding: 8px 18px;
+
+    color: black;
+    text-decoration: none;
+
+    font-size: 15px;
+    letter-spacing: 1.5px;
+    white-space: nowrap;
+}
+
+/* Show dropdown */
+
+.nav-dropdown:hover .nav-dropdown-menu,
+.nav-dropdown:focus-within .nav-dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.nav-dropdown:hover .nav-dropdown-button::after,
+.nav-dropdown:focus-within .nav-dropdown-button::after {
+    width: 100%;
+}
 
 /* =========================
    HOME
@@ -838,6 +918,15 @@ nav a::after {
         gap: 14px 18px;
     }
 
+        .issue-nav-links {
+        gap: 18px;
+        flex-wrap: wrap;
+    }
+
+    .issue-nav-links a {
+        font-size: 15px;
+    }
+
     .submissions-layout {
         flex-direction: column;
         gap: 40px;
@@ -893,6 +982,7 @@ nav a::after {
         text-align: center;
     }
 }
+
 
 
 /* =========================
@@ -1107,10 +1197,18 @@ nav a::after {
     opacity: 0.8;
 }
 
-.playlist-platforms {
+.playlist-platforms-secret {
     display: flex;
     flex-wrap: wrap;
     gap: 28px;
+}
+
+.playlist-platforms {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 35px;
+    width: 100%;
 }
 
 .playlist-platform-link {
@@ -1191,6 +1289,94 @@ nav a::after {
     margin-top: 2px;
 }
 
+/* ---------- PLAYLIST PAGE INTRO ---------- */
+
+.playlist-page-intro {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 70px 0 80px;
+    text-align: center;
+}
+
+.playlist-page-label {
+    margin: 0 0 20px;
+    font-size: 14px;
+    letter-spacing: 3px;
+}
+
+.playlist-page-intro h1 {
+    margin: 0;
+    font-size: clamp(52px, 9vw, 110px);
+    font-weight: normal;
+    line-height: 0.9;
+    letter-spacing: -3px;
+}
+
+.playlist-page-subtitle {
+    margin: 28px 0 35px;
+    font-size: 18px;
+    letter-spacing: 4px;
+}
+
+.playlist-page-description {
+    max-width: 620px;
+    margin: 0 auto 35px;
+    font-size: 17px;
+    line-height: 1.6;
+}
+
+
+/* ---------- PLAYLIST CONTENT ---------- */
+
+.issue-playlist {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding-top: 0;
+    border-top: 1px solid black;
+}
+
+.playlist-art {
+    max-width: 300px;
+    margin: 60px auto 80px;
+}
+
+.playlist-art img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid black;
+}
+
+
+/* ---------- MOBILE ---------- */
+
+@media (max-width: 850px) {
+
+    .playlist-page-intro {
+        padding: 45px 0 55px;
+    }
+
+    .playlist-page-intro h1 {
+        font-size: clamp(48px, 14vw, 80px);
+        letter-spacing: -2px;
+    }
+
+    .playlist-page-subtitle {
+        font-size: 15px;
+        letter-spacing: 3px;
+    }
+
+    .playlist-page-description {
+        font-size: 16px;
+    }
+
+    .playlist-art {
+        max-width: 220px;
+        margin: 40px auto 60px;
+    }
+
+}
+
 /* ISSUE PAGE MOBILE */
 
 @media (max-width: 850px) {
@@ -1239,6 +1425,48 @@ nav a::after {
     }
 }
 
+
+/* =========================
+   ISSUE NAVIGATION
+========================= */
+
+.issue-nav {
+    gap: 24px;
+}
+
+.issue-nav-links {
+    display: flex;
+    justify-content: center;
+    gap: 45px;
+}
+
+.issue-nav-links a {
+    position: relative;
+    color: black;
+    text-decoration: none;
+    letter-spacing: 2px;
+}
+
+.issue-nav-links a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+
+    width: 0;
+    height: 1px;
+
+    background: black;
+    transition: width 0.45s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+
+    .issue-nav-links a:hover::after {
+        width: 100%;
+    }
+
+}
 /* =========================
    SECRET PAGE
 ========================= */
@@ -1932,6 +2160,15 @@ body.secret-body .song-artist {
                 font-size: 11px;
                 line-height: 1.5;
                 text-align: center;
+            }
+
+            .gallery-shipping-note a {
+                color: inherit;
+                text-decoration: underline;
+            }
+
+            .gallery-snote a:hover {
+                color: inherit;
             }
 
             .gallery-end {
