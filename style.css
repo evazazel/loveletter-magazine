@@ -2215,3 +2215,219 @@ body.secret-body .song-artist {
                 text-align: center;
                 margin-top: 0.75rem;
             }
+
+
+            /* ---------- ISSUE ONE INTERVIEW ---------- */
+
+.interview-page {
+    padding-top: 40px;
+}
+
+.interview-header {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 70px 0 100px;
+    text-align: center;
+}
+
+.interview-label {
+    margin: 0 0 22px;
+    font-size: 14px;
+    letter-spacing: 3px;
+}
+
+.interview-header h1 {
+    margin: 0;
+    font-size: clamp(48px, 8vw, 105px);
+    font-weight: normal;
+    line-height: 0.9;
+    letter-spacing: -3px;
+}
+
+.interview-subtitle {
+    max-width: 650px;
+    margin: 35px auto 0;
+    font-size: 19px;
+    line-height: 1.5;
+}
+
+
+/* ---------- ARTICLE ---------- */
+
+.introduction,
+.interview,
+.end-matter {
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.introduction p,
+.question p,
+.answer p,
+.end-matter p {
+    margin: 0 0 1.5em;
+    font-size: 17px;
+    line-height: 1.7;
+}
+
+/* "- Eva Azazel" right-aligned */
+.byline {
+    margin: 35px 0 90px;
+    font-size: 17px;
+    font-style: italic;
+    text-align: right;
+}
+
+.interview {
+    padding-bottom: 40px;
+}
+
+.exchange {
+    margin: 0 0 70px;
+}
+
+/* INTERVIEWER / MUN labels, centered */
+.speaker {
+    margin: 0 0 15px;
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-align: center;
+}
+
+.question {
+    margin-bottom: 40px;
+}
+
+.question p:last-child,
+.answer p:last-child {
+    margin-bottom: 0;
+}
+
+/* Evangelion lyrics */
+.lyrics {
+    margin: 2em 0;
+    padding-left: 25px;
+    border-left: 1px solid currentColor;
+    font-style: italic;
+}
+
+.lyrics p {
+    margin: 0 0 1em;
+}
+
+.lyrics p:last-child {
+    margin-bottom: 0;
+}
+
+
+/* ---------- SONG LINKS ---------- */
+
+.song-link {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    transition: opacity 0.2s ease;
+}
+
+.song-link:hover {
+    opacity: 0.55;
+}
+
+
+/* ---------- END OF ARTICLE ---------- */
+
+.end-matter {
+    padding: 60px 0 80px;
+}
+
+.end-matter p {
+    font-size: 16px;
+}
+
+.heart {
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+
+/* ---------- MOBILE ---------- */
+
+@media (max-width: 850px) {
+
+    .interview-page {
+        padding: 20px 20px 80px;
+    }
+
+    .interview-header {
+        padding: 50px 0 70px;
+    }
+
+    .interview-header h1 {
+        font-size: clamp(45px, 13vw, 80px);
+        letter-spacing: -2px;
+    }
+
+    .interview-subtitle {
+        font-size: 17px;
+    }
+
+        .introduction p,
+    .question p,
+    .answer p {
+        font-size: 16px;
+        line-height: 1.65;
+    }
+
+    .interview,
+    .introduction,
+    .end-matter {
+        max-width: 100%;
+    }
+
+    .speaker {
+        font-size: 12px;
+        letter-spacing: 2.5px;
+    }
+
+    .exchange {
+        margin-bottom: 55px;
+    }
+
+    .interview-speaker {
+        font-size: 12px;
+        letter-spacing: 2.5px;
+    }
+
+}
+
+/* ---------- DARK MODE ---------- */
+
+.theme-toggle {
+    padding: 0;
+    border: none;
+    background: none;
+    color: inherit;
+    font: inherit;
+    letter-spacing: inherit;
+    cursor: pointer;
+}
+
+html.dark body {
+    background: #111;
+    color: #eee;
+}
+
+html.dark .logo {
+    filter: invert(1);
+}
+
+html.dark .buy-issue-button {
+    background: #eee;
+    color: #111;
+    border-color: #eee;
+}
+
+html.dark .lyrics {
+    border-left-color: #eee;
+}
