@@ -18,7 +18,7 @@ a {
 
 @keyframes fadeIn {
     from {
-        opacity: 0;
+        opacity: 1;
         transform: translateY(8px);
     }
 
@@ -2431,3 +2431,147 @@ html.dark .buy-issue-button {
 html.dark .lyrics {
     border-left-color: #eee;
 }
+
+
+
+/* ---------- GALLERY HERO HANDS ---------- */
+
+.gallery-hero {
+    position: relative;
+}
+
+.gallery-hand {
+    position: absolute;
+    z-index: 2;
+    width: clamp(280px, 32vw, 480px);
+    height: auto;
+    pointer-events: none;
+    pointer-events: auto;
+    cursor: pointer;
+    opacity: 1 !important;
+}
+
+/* Top right */
+
+.gallery-hand-top {
+    top: 15%;
+    right: -5%;
+    transform-origin: 120% 10%;
+    animation: handSwingClockwise 1.3s ease-out 0.3s both;
+    width: clamp(190px, 32vw, 470px);
+}
+
+/* Bottom left */
+
+.gallery-hand-bottom {
+    bottom: 3%;
+    left: -3%;
+    transform-origin: 0% 90%;
+    animation: handSwingAnticlockwise 1.3s ease-out 0.6s both;
+    width: clamp(210px, 36vw, 510px);
+}
+
+/* Swing clockwise */
+
+@keyframes handSwingClockwise {
+    0% {
+        transform: translate(100px, -70px) rotate(-60deg);
+    }
+
+    70% {
+        transform: translate(-10px, 8px) rotate(1deg);
+    }
+
+    85% {
+        transform: translate(4px, -3px) rotate(-2deg);
+    }
+
+    100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+}
+
+/* Swing anticlockwise */
+
+@keyframes handSwingAnticlockwise {
+    0% {
+        transform: translate(-100px, 70px) rotate(120deg);
+    }
+
+    70% {
+        transform: translate(10px, -8px) rotate(-1deg);
+    }
+
+    85% {
+        transform: translate(-4px, 3px) rotate(2deg);
+    }
+
+    100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+}
+
+
+/* ---------- CLICK TO DISMISS ---------- */
+
+/* ---------- HAND EXIT ANIMATIONS ---------- */
+
+.gallery-hand-top.swing-away {
+    animation: handExitClockwise 0.8s ease-in forwards;
+}
+
+.gallery-hand-bottom.swing-away {
+    animation: handExitAnticlockwise 0.8s ease-in forwards;
+}
+
+@keyframes handExitClockwise {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+
+    35% {
+        transform: translate(-15px, 10px) rotate(5deg);
+    }
+
+    100% {
+        transform: translate(120%, -120%) rotate(-60deg);
+    }
+}
+
+@keyframes handExitAnticlockwise {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+
+    35% {
+        transform: translate(15px, -10px) rotate(-5deg);
+    }
+
+    100% {
+        transform: translate(-120%, 120%) rotate(120deg);
+    }
+}
+
+.gallery-hand.swing-away {
+    pointer-events: none;
+    cursor: default;
+}
+
+/* Smaller screens */
+
+@media (max-width: 600px) {
+    .gallery-hand {
+        width: clamp(200px, 35vw, 280px);
+    }
+
+    .gallery-hand-top {
+        top: 19%;
+        right: -11%;
+    }
+
+    .gallery-hand-bottom {
+        bottom: 15%;
+        left: -7%;
+    }
+}
+

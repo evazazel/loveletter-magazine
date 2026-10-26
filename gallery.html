@@ -54,6 +54,24 @@
             <div class="gallery-scroll-note">
                 scroll
             </div>
+
+            <img
+                src="WEBHAND1.png"
+                alt=""
+                class="gallery-hand gallery-hand-top"
+                tabindex="0"
+                role="button"
+                aria-label="Dismiss top-right hand"
+            >
+
+            <img
+                src="WEBHAND2.png"
+                alt=""
+                class="gallery-hand gallery-hand-bottom"
+                tabindex="0"
+                role="button"
+                aria-label="Dismiss bottom-left hand"
+            >
         </section>
 
 
@@ -673,6 +691,29 @@
             }, true);
         });
     </script>
+
+<script>
+document.querySelectorAll('.gallery-hand').forEach(hand => {
+
+    function swingAway() {
+        if (hand.classList.contains('swing-away')) return;
+
+        hand.classList.add('swing-away');
+        hand.setAttribute('aria-hidden', 'true');
+        hand.removeAttribute('tabindex');
+    }
+
+    hand.addEventListener('click', swingAway);
+
+    hand.addEventListener('keydown', event => {
+        if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            swingAway();
+        }
+    });
+
+});
+</script>
 
 </body>
 
