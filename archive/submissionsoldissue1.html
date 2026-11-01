@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submissions - The Love Letter</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav>
+
+
+    <div class="nav-links">
+          <a href="index.html">HOME</a>
+          <a href="about.html">ABOUT</a>
+          
+          <div class="nav-dropdown">
+            <button class="nav-dropdown-button">ISSUES</button>
+          
+            <div class="nav-dropdown-menu">
+              <a href="issue1.html">ISSUE ONE</a>
+            </div>
+          </div>
+          
+        <a href="events.html">EVENTS</a>
+        <a href="gallery.html">GALLERY</a>
+        <a href="submissions.html">SUBMISSIONS</a>
+    </div>
+</nav>
+
+    <main class="submissions-layout">
+        <div class="submission-text">
+    <img src="submissions-title.svg" alt="Submissions" class="section-title-svg">
+
+    <div class="submission-details">
+    <div class="detail-block">
+        <h2>ABOUT THIS ISSUE</h2>
+        <p>
+            Marginalia is a window into the private thoughts of a long-gone reader. It gives us clues to who they are and reveals something forgotten. To scratch up and scrawl, to roll around in the words, to leave our mark in all kinds of ways. Away from the centres, and always at the edge. An ornate frame surrounding a painting. A layer of tattoos on the surface of a torso. A rainbow halo around a lighted moon.
+        </p>
+        <p>
+            We want work that draws attention to the peripheral, to what is inscribed on the outer edges. To explore what is inherited and what gets left behind. To find where the centres end and the margins begin. To hold a light towards the scratches in our skulls. 
+        </p>
+    </div>
+
+    <div class="detail-block">
+        <h2>SEND TO</h2>
+        <p>thelovelettermag@gmail.com</p>
+    </div>
+
+    <div class="detail-block">
+        <h2>FORMATS</h2>
+        <p>
+            We welcome poetry (but please no more than 5 pieces), short fiction, personal essays, letters, reviews, interviews, plays, metafiction and any other experimental literary work, as long as it can be physically printed in an A5 magazine.
+        </p>
+    </div>
+
+    <div class="detail-block">
+        <h2>SUBMISSION GUIDELINES</h2>
+        <p>
+            There is no hard word limit, but as a general guide, long-form pieces shouldn't exceed more than around 3000 words. Simultaneous submissions are welcome, but please tell us if your work is accepted elsewhere.
+        </p>
+        <p>
+            We don't accept reprints and only consider previously
+            unpublished work.
+        </p>
+    </div>
+
+    <div class="detail-block">
+        <h2>DEADLINE</h2>
+        <p>Monday 7th December 2026
+        </p>
+    </div>
+</div>
+</div>
+<div class="submission-image">
+    <a href="stones.html" class="hidden-piece-link">
+        <div class="image-frame">
+            <span class="image-quote">
+                I still think of stones I skipped last Summer.
+            </span>
+            <img src="stones-illustration-final.jpg" alt="Submission artwork">
+        </div>
+    </a>
+</div>
+    </main>
+<footer class="site-footer">
+    <a href="https://instagram.com/thelovelettermag" target="_blank" class="footer-link">
+        INSTAGRAM
+    </a>
+    <span>© 2026 THE LOVE LETTER</span>
+</footer>
+
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "b2aa7c70360b4bc3950f77e60006973d"}'></script><!-- End Cloudflare Web Analytics -->
+
+</body>
+</html>
+
+/* =========================
+   SUBMISSIONS
+========================= */
+
+.submissions-layout {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 60px;
+
+    padding: 60px 6vw;
+}
+
+.submission-text {
+    flex: 1 1 55%;
+    width: 50%;
+    min-width: 320px;
+    max-width: 650px;
+    line-height: 1.8;
+}
+
+.submission-text h1 {
+    margin-bottom: 30px;
+    font-size: 42px;
+    letter-spacing: 2px;
+}
+
+.submission-intro {
+    margin-bottom: 30px;
+    font-size: 24px;
+    line-height: 1.6;
+}
+
+.submission-details {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+
+    margin-top: 50px;
+}
+
+.detail-block h2 {
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: normal;
+    letter-spacing: 3px;
+}
+
+.detail-block p {
+    margin: 0;
+}
+
+.detail-block p + p {
+    margin-top: 15px;
+}
+
+.detail-block:last-child p {
+    font-size: 22px;
+}
+
+.section-title-svg {
+    display: block;
+
+    width: 100%;
+    max-width: 460px;
+    height: auto;
+
+    margin-bottom: 30px;
+}
+
+.submission-image {
+    flex: 1 1 45%;
+    min-width: 280px;
+
+    display: flex;
+    justify-content: center;
+
+    margin-left: 100px;
+}
+
+.submission-image img {
+    width: 100%;
+    max-width: 700px;
+    height: auto;
+}
+
+
+/* =========================
+   SUBMISSION IMAGE
+========================= */
+
+.hidden-piece-link {
+    display: inline-block;
+    color: inherit;
+    text-decoration: none;
+}
+
+.image-frame {
+    position: relative;
+    display: inline-block;
+    transform: translateZ(0);
+}
+
+.image-frame img {
+    display: block;
+
+    width: 100%;
+    max-width: 700px;
+    height: auto;
+
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    image-rendering: auto;
+}
+
+.image-frame::before,
+.image-frame::after {
+    content: "";
+    position: absolute;
+    inset: -8px;
+
+    pointer-events: none;
+    transition: clip-path 1s ease;
+}
+
+.image-frame::before {
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+    clip-path: inset(0 100% 100% 0);
+}
+
+.image-frame::after {
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    clip-path: inset(100% 0 0 100%);
+}
+
+.image-quote {
+    position: absolute;
+    left: -55px;
+    top: 50%;
+
+    transform: translateY(-50%) rotate(-180deg);
+    writing-mode: vertical-rl;
+
+    font-size: 22px;
+    font-style: italic;
+    letter-spacing: 1px;
+    line-height: 1.4;
+    white-space: nowrap;
+
+    opacity: 0;
+    transition: opacity 1.2s ease;
+
+    pointer-events: none;
+}
+
+@keyframes softPulse {
+    0% {
+        filter: opacity(0.7);
+    }
+
+    50% {
+        filter: opacity(1);
+    }
+
+    100% {
+        filter: opacity(0.7);
+    }
+}

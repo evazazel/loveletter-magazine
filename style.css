@@ -268,171 +268,139 @@ nav a::after {
 }
 
 
-/* =========================
-   SUBMISSIONS
-========================= */
 
-.submissions-layout {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 60px;
+/* ---------- SUBMISSIONS PAGE ---------- */
 
-    padding: 60px 6vw;
+.submissions-page {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 60px 5% 100px;
 }
 
-.submission-text {
-    flex: 1 1 55%;
-    width: 50%;
-    min-width: 320px;
-    max-width: 650px;
-    line-height: 1.8;
-}
+/* ---------- HERO ---------- */
 
-.submission-text h1 {
-    margin-bottom: 30px;
-    font-size: 42px;
-    letter-spacing: 2px;
-}
-
-.submission-intro {
-    margin-bottom: 30px;
-    font-size: 24px;
-    line-height: 1.6;
-}
-
-.submission-details {
+.submission-hero {
     display: flex;
     flex-direction: column;
-    gap: 28px;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 100px;
+}
 
-    margin-top: 50px;
+.submission-logo {
+    width: min(550px, 75%);
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.requests-title {
+    width: min(125px, 55%);
+    height: auto;
+    margin-bottom: 1px;
+}
+
+.marginalia-title {
+    width: min(400px, 85%);
+    height: auto;
+    margin-bottom: 35px;
+}
+
+.marginalia-illustration {
+    width: min(650px, 85%);
+    height: auto;
+    object-fit: contain;
+    margin-top: 0;
+}
+
+/* ---------- SUBMISSION DETAILS ---------- */
+
+.submission-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 100px;
+    row-gap: 65px;
+    max-width: 1100px;
+    margin: 0 auto;
 }
 
 .detail-block h2 {
-    margin-bottom: 8px;
     font-size: 14px;
     font-weight: normal;
-    letter-spacing: 3px;
+    letter-spacing: 1.5px;
+    margin-bottom: 18px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #810100;
 }
 
 .detail-block p {
-    margin: 0;
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 0 0 15px;
 }
 
-.detail-block:last-child p {
-    font-size: 22px;
+.detail-block p:last-child {
+    margin-bottom: 0;
 }
 
-.section-title-svg {
-    display: block;
+/* ---------- MOBILE ---------- */
 
-    width: 100%;
-    max-width: 460px;
-    height: auto;
+@media (max-width: 700px) {
 
-    margin-bottom: 30px;
-}
-
-.submission-image {
-    flex: 1 1 45%;
-    min-width: 280px;
-
-    display: flex;
-    justify-content: center;
-
-    margin-left: 100px;
-}
-
-.submission-image img {
-    width: 100%;
-    max-width: 700px;
-    height: auto;
-}
-
-
-/* =========================
-   SUBMISSION IMAGE
-========================= */
-
-.hidden-piece-link {
-    display: inline-block;
-    color: inherit;
-    text-decoration: none;
-}
-
-.image-frame {
-    position: relative;
-    display: inline-block;
-    transform: translateZ(0);
-}
-
-.image-frame img {
-    display: block;
-
-    width: 100%;
-    max-width: 700px;
-    height: auto;
-
-    transform: translateZ(0);
-    backface-visibility: hidden;
-    image-rendering: auto;
-}
-
-.image-frame::before,
-.image-frame::after {
-    content: "";
-    position: absolute;
-    inset: -8px;
-
-    pointer-events: none;
-    transition: clip-path 1s ease;
-}
-
-.image-frame::before {
-    border-top: 1px solid black;
-    border-left: 1px solid black;
-    clip-path: inset(0 100% 100% 0);
-}
-
-.image-frame::after {
-    border-right: 1px solid black;
-    border-bottom: 1px solid black;
-    clip-path: inset(100% 0 0 100%);
-}
-
-.image-quote {
-    position: absolute;
-    left: -55px;
-    top: 50%;
-
-    transform: translateY(-50%) rotate(-180deg);
-    writing-mode: vertical-rl;
-
-    font-size: 22px;
-    font-style: italic;
-    letter-spacing: 1px;
-    line-height: 1.4;
-    white-space: nowrap;
-
-    opacity: 0;
-    transition: opacity 1.2s ease;
-
-    pointer-events: none;
-}
-
-@keyframes softPulse {
-    0% {
-        filter: opacity(0.7);
+    .submissions-page {
+        padding: 40px 7% 70px;
     }
 
-    50% {
-        filter: opacity(1);
+    .submission-hero {
+        margin-bottom: 65px;
     }
 
-    100% {
-        filter: opacity(0.7);
+    .submission-logo {
+        width: min(420px, 90%);
+        margin-bottom: 18px;
     }
+
+    .requests-title {
+        width: min(110px, 45%);
+        margin-bottom: 1px;
+    }
+
+    .marginalia-illustration {
+        width: 100%;
+        margin-top: 0;
+        margin-bottom: 20px;
+    }
+
+    .marginalia-title {
+        width: min(350px, 95%);
+        margin-bottom: 35px;
+    }
+
+    .submission-details {
+        grid-template-columns: 1fr;
+        row-gap: 45px;
+    }
+
+}
+
+.submissions-page {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 60px 5% 100px;
+    box-sizing: border-box;
+}
+
+.submission-hero,
+.submission-details {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.submission-hero img {
+    max-width: 100%;
+    height: auto;
 }
 
 
